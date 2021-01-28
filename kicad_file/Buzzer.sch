@@ -1,0 +1,344 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:R_Small R3
+U 1 1 6011476C
+P 4350 4100
+F 0 "R3" V 4546 4100 50  0000 C CNN
+F 1 "992ohm" V 4455 4100 50  0000 C CNN
+F 2 "" H 4350 4100 50  0001 C CNN
+F 3 "~" H 4350 4100 50  0001 C CNN
+	1    4350 4100
+	0    1    -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 6011EC22
+P 5450 5450
+F 0 "#PWR?" H 5450 5200 50  0001 C CNN
+F 1 "GND" H 5455 5277 50  0000 C CNN
+F 2 "" H 5450 5450 50  0001 C CNN
+F 3 "" H 5450 5450 50  0001 C CNN
+	1    5450 5450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4250 4100 3750 4100
+Connection ~ 5450 5450
+$Comp
+L Device:Buzzer BZ
+U 1 1 60171F86
+P 7900 2650
+F 0 "BZ" H 8052 2679 50  0000 L CNN
+F 1 "Buzzer" H 8052 2588 50  0000 L CNN
+F 2 "" V 7875 2750 50  0001 C CNN
+F 3 "~" V 7875 2750 50  0001 C CNN
+	1    7900 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7350 4100 7600 4100
+$Comp
+L Device:R_Small R1
+U 1 1 6017D0ED
+P 7250 4100
+F 0 "R1" V 7446 4100 50  0000 C CNN
+F 1 "9.94Kohm" V 7355 4100 50  0000 C CNN
+F 2 "" H 7250 4100 50  0001 C CNN
+F 3 "~" H 7250 4100 50  0001 C CNN
+	1    7250 4100
+	0    1    -1   0   
+$EndComp
+$Comp
+L Transistor_FET:BSN20 Q?
+U 1 1 6018635A
+P 6700 3700
+F 0 "Q?" H 6905 3746 50  0000 L CNN
+F 1 "BSN20" H 6905 3655 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 6900 3625 50  0001 L CIN
+F 3 "http://www.diodes.com/assets/Datasheets/ds31898.pdf" H 6700 3700 50  0001 L CNN
+	1    6700 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6800 3900 6800 4100
+Connection ~ 6800 4100
+Wire Wire Line
+	6800 4100 7150 4100
+Wire Wire Line
+	6800 3500 7600 3500
+Wire Wire Line
+	7600 3500 7600 4100
+Wire Wire Line
+	7600 4100 7600 5450
+Connection ~ 7600 4100
+Wire Wire Line
+	6050 4100 6800 4100
+Wire Wire Line
+	5450 5450 5450 5100
+Wire Wire Line
+	8400 1650 8400 5450
+Wire Wire Line
+	8400 5450 7600 5450
+Connection ~ 7600 5450
+$Comp
+L Device:Battery_Cell LIPO_1S
+U 1 1 6011DE40
+P 6500 2250
+F 0 "LIPO_1S" H 6382 2254 50  0000 R CNN
+F 1 "Battery_Cell" H 6382 2345 50  0000 R CNN
+F 2 "" V 6500 2310 50  0001 C CNN
+F 3 "~" V 6500 2310 50  0001 C CNN
+	1    6500 2250
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6500 2150 6500 1650
+Wire Wire Line
+	6500 1650 8400 1650
+$Comp
+L power:+5V #PWR?
+U 1 1 6011A753
+P 5300 1000
+F 0 "#PWR?" H 5300 850 50  0001 C CNN
+F 1 "+5V" H 5315 1173 50  0000 C CNN
+F 2 "" H 5300 1000 50  0001 C CNN
+F 3 "" H 5300 1000 50  0001 C CNN
+	1    5300 1000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 4100 4850 4100
+Wire Wire Line
+	4650 3100 4450 3100
+Wire Wire Line
+	4850 3100 5450 3100
+$Comp
+L Device:R_Small R2
+U 1 1 601A0ACE
+P 4750 3100
+F 0 "R2" V 4946 3100 50  0000 C CNN
+F 1 "9.94Kohm" V 4855 3100 50  0000 C CNN
+F 2 "" H 4750 3100 50  0001 C CNN
+F 3 "~" H 4750 3100 50  0001 C CNN
+	1    4750 3100
+	0    1    -1   0   
+$EndComp
+$Comp
+L MCU_ST_STM8:STM8S003F3P Controller
+U 1 1 6010B02B
+P 5450 4100
+F 0 "Controller" H 5450 5281 50  0000 C CNN
+F 1 "STM8S003F3P" H 5450 5190 50  0000 C CNN
+F 2 "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm" H 5500 5200 50  0001 L CNN
+F 3 "http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00024550.pdf" H 5400 3700 50  0001 C CNN
+	1    5450 4100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6500 2450 6500 2550
+Wire Wire Line
+	6500 3000 6500 3700
+Wire Wire Line
+	7800 2550 6500 2550
+Connection ~ 6500 2550
+Wire Wire Line
+	6500 2550 6500 2800
+$Comp
+L Switch:SW_Push SW1
+U 1 1 6013F9ED
+P 2750 5700
+F 0 "SW1" H 2750 5985 50  0000 C CNN
+F 1 "SW_Push" H 2750 5894 50  0000 C CNN
+F 2 "" H 2750 5900 50  0001 C CNN
+F 3 "~" H 2750 5900 50  0001 C CNN
+	1    2750 5700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5650 6300 5650 5450
+Connection ~ 5650 5450
+Wire Wire Line
+	5650 5450 5450 5450
+Wire Wire Line
+	3750 4800 3750 5450
+Wire Wire Line
+	3750 4100 3750 4400
+$Comp
+L Transistor_BJT:MMBT3904 1AM
+U 1 1 601218E6
+P 3850 4600
+F 0 "1AM" V 4085 4600 50  0000 C CNN
+F 1 "MMBT3904" V 4176 4600 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 4050 4525 50  0001 L CIN
+F 3 "https://www.onsemi.com/pub/Collateral/2N3903-D.PDF" H 3850 4600 50  0001 L CNN
+	1    3850 4600
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:LED BuzzerLight
+U 1 1 6014D1A4
+P 2900 4600
+F 0 "BuzzerLight" H 2893 4817 50  0000 C CNN
+F 1 "LED" H 2893 4726 50  0000 C CNN
+F 2 "" H 2900 4600 50  0001 C CNN
+F 3 "~" H 2900 4600 50  0001 C CNN
+	1    2900 4600
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R_Small 2.2Ohm
+U 1 1 60150121
+P 2500 4600
+F 0 "2.2Ohm" V 2696 4600 50  0000 C CNN
+F 1 "R_shunt 62R0" V 2605 4600 50  0000 C CNN
+F 2 "" H 2500 4600 50  0001 C CNN
+F 3 "~" H 2500 4600 50  0001 C CNN
+	1    2500 4600
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	2750 4600 2600 4600
+$Comp
+L Diode:1N5819 Diode1
+U 1 1 60158A46
+P 2100 4600
+F 0 "Diode1" H 2100 4817 50  0000 C CNN
+F 1 "||SL - 1N5819" H 2100 4726 50  0000 C CNN
+F 2 "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal" H 2100 4425 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/88525/1n5817.pdf" H 2100 4600 50  0001 C CNN
+	1    2100 4600
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2400 4600 2250 4600
+Wire Wire Line
+	3750 5450 4000 5450
+Wire Wire Line
+	4050 4600 3050 4600
+Wire Wire Line
+	5100 6300 5650 6300
+$Comp
+L Regulator_Linear:XC6206PxxxMR VoltReg_662k
+U 1 1 60147507
+P 5100 6000
+F 0 "VoltReg_662k" H 5100 6242 50  0000 C CNN
+F 1 "XC6206PxxxMR 5vTo3.3v" H 5100 6151 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 5100 6225 50  0001 C CIN
+F 3 "https://www.torexsemi.com/file/xc6206/XC6206.pdf" H 5100 6000 50  0001 C CNN
+	1    5100 6000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1950 4600 1950 2000
+Wire Wire Line
+	5650 5450 7600 5450
+Wire Wire Line
+	2950 5700 4000 5700
+Wire Wire Line
+	4000 5700 4000 5450
+Connection ~ 4000 5450
+Wire Wire Line
+	4000 5450 5450 5450
+Wire Wire Line
+	1700 3600 1700 5700
+Wire Wire Line
+	1700 5700 2550 5700
+Wire Wire Line
+	4850 3500 4050 3500
+Wire Wire Line
+	1700 3600 4850 3600
+$Comp
+L Connector_Generic:Conn_01x03 RemoteHeader
+U 1 1 601AE740
+P 5300 1850
+F 0 "RemoteHeader" V 5264 1662 50  0000 R CNN
+F 1 "Buzz/5V/GND" V 5173 1662 50  0000 R CNN
+F 2 "" H 5300 1850 50  0001 C CNN
+F 3 "~" H 5300 1850 50  0001 C CNN
+	1    5300 1850
+	0    -1   1    0   
+$EndComp
+Connection ~ 6500 1650
+Wire Wire Line
+	4450 1600 5200 1600
+Wire Wire Line
+	5200 1600 5200 1650
+Wire Wire Line
+	4450 1600 4450 3100
+Wire Wire Line
+	5300 1000 5300 1650
+Connection ~ 5300 1650
+Wire Wire Line
+	5400 1650 6500 1650
+$Comp
+L Device:LED BuzzerLight?
+U 1 1 601C352D
+P 5150 2150
+F 0 "BuzzerLight?" H 5143 2367 50  0000 C CNN
+F 1 "LED" H 5143 2276 50  0000 C CNN
+F 2 "" H 5150 2150 50  0001 C CNN
+F 3 "~" H 5150 2150 50  0001 C CNN
+	1    5150 2150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1950 2000 4050 2000
+Wire Wire Line
+	4050 3500 4050 2800
+Wire Wire Line
+	4050 2600 4050 2000
+$Comp
+L Device:R_Small 9.45kOhm
+U 1 1 601376D3
+P 4050 2700
+F 0 "9.45kOhm" V 4246 2700 50  0000 C CNN
+F 1 "R4" V 4155 2700 50  0000 C CNN
+F 2 "" H 4050 2700 50  0001 C CNN
+F 3 "~" H 4050 2700 50  0001 C CNN
+	1    4050 2700
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:R_Small 980Ohm
+U 1 1 601C9DD4
+P 4900 2150
+F 0 "980Ohm" V 5096 2150 50  0000 C CNN
+F 1 "R5" V 5005 2150 50  0000 C CNN
+F 2 "" H 4900 2150 50  0001 C CNN
+F 3 "~" H 4900 2150 50  0001 C CNN
+	1    4900 2150
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	5300 1650 5300 2150
+Wire Wire Line
+	4050 2000 4800 2000
+Wire Wire Line
+	4800 2000 4800 2150
+Connection ~ 4050 2000
+$Comp
+L Device:R_Small 2.2Ohm
+U 1 1 60128808
+P 6500 2900
+F 0 "2.2Ohm" V 6696 2900 50  0000 C CNN
+F 1 "R_shunt" V 6605 2900 50  0000 C CNN
+F 2 "" H 6500 2900 50  0001 C CNN
+F 3 "~" H 6500 2900 50  0001 C CNN
+	1    6500 2900
+	1    0    0    1   
+$EndComp
+$EndSCHEMATC
