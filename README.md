@@ -3,7 +3,7 @@
 Model|Controller|Chip Mark
 -----|----------|---------
 JHE42B|STM8S003F3 TSSOP20|STM8S003F3P6
-JHE42B_S|STM8S003F3 UFQFPN20|S033PHVG822Y
+JHE42B_S|STM8S003F3 LQFP32|S033PHVG822Y
 
 # Goal
 Replace the default firmware in order to add common feature found on other autonomous buzzer
