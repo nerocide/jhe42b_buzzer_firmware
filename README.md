@@ -28,7 +28,7 @@ You need a ST-link v2, so you can write firmware onto the STM8 flash memory
 <!-- ![JHE42B back](/img/JHE42B_back.jpg) -->
 
 <img src="/img/JHE42B_front.jpg" width="300"/> <img src="/img/JHE42B_back.jpg" width="300"/>
-
+<img src="/img/jhe42b_schematic.png" width="600"/>
 ## JHE42B_S
 <!-- ![JHE42B_S front](/img/JHE42B_S_front.jpg) -->
 <!-- ![JHE42B_S back](/img/JHE42B_S_back.jpg) -->
