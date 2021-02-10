@@ -5,8 +5,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Autonomous Buzzer JHE42B"
-Date "2021-02-0"
-Rev "3"
+Date "2021-02-05"
+Rev "4"
 Comp "Reversed schematic"
 Comment1 "Needs to be double checked"
 Comment2 ""
@@ -88,7 +88,7 @@ L Regulator_Linear:XC6206PxxxMR VoltReg_662k
 U 1 1 60147507
 P 8850 4550
 F 0 "VoltReg_662k" H 8850 4792 50  0000 C CNN
-F 1 "XC6206PxxxMR 5vTo3.3v" H 8850 4701 50  0000 C CNN
+F 1 "XC6206PxxxMR 5vTo3.3v" H 8850 4700 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 8850 4775 50  0001 C CIN
 F 3 "https://www.torexsemi.com/file/xc6206/XC6206.pdf" H 8850 4550 50  0001 C CNN
 	1    8850 4550

@@ -5,8 +5,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Autonomous Buzzer JHE42B"
-Date "2021-02-0"
-Rev "3"
+Date "2021-02-05"
+Rev "4"
 Comp "Reversed schematic"
 Comment1 "Needs to be double checked"
 Comment2 ""
@@ -236,25 +236,12 @@ Wire Wire Line
 Connection ~ 7700 3300
 Wire Wire Line
 	7700 3300 7700 3500
-Wire Wire Line
-	4600 3000 2250 3000
-$Comp
-L power:GND #PWR?
-U 1 1 602456CD
-P 2250 3200
-F 0 "#PWR?" H 2250 2950 50  0001 C CNN
-F 1 "GND" H 2250 3000 50  0000 C CNN
-F 2 "" H 2250 3200 50  0001 C CNN
-F 3 "" H 2250 3200 50  0001 C CNN
-	1    2250 3200
-	1    0    0    -1  
-$EndComp
 $Comp
 L Device:LED PowerOn
 U 1 1 6024A005
 P 2650 3400
 F 0 "PowerOn" H 2700 3650 50  0000 C CNN
-F 1 "LED" H 2700 3550 50  0000 C CNN
+F 1 "LED Rouge?" H 2700 3550 50  0000 C CNN
 F 2 "" H 2650 3400 50  0001 C CNN
 F 3 "~" H 2650 3400 50  0001 C CNN
 	1    2650 3400
@@ -274,12 +261,12 @@ $EndComp
 $Comp
 L Connector_Generic:Conn_01x03 Remote
 U 1 1 6023EF45
-P 2050 3100
-F 0 "Remote" H 2450 3450 50  0000 R CNN
-F 1 "Header" H 2450 3350 50  0000 R CNN
-F 2 "" H 2050 3100 50  0001 C CNN
-F 3 "~" H 2050 3100 50  0001 C CNN
-	1    2050 3100
+P 1450 3100
+F 0 "Remote" H 1850 3450 50  0000 R CNN
+F 1 "Header" H 1850 3350 50  0000 R CNN
+F 2 "" H 1450 3100 50  0001 C CNN
+F 3 "~" H 1450 3100 50  0001 C CNN
+	1    1450 3100
 	-1   0    0    -1  
 $EndComp
 $Comp
@@ -332,16 +319,31 @@ Wire Wire Line
 	4300 4200 4300 4000
 Wire Wire Line
 	4300 4000 4950 4000
-Text Label 1700 3050 0    50   ~ 0
+Text Label 1050 3050 0    50   ~ 0
 Buzzer
-Text Label 1850 3150 0    50   ~ 0
+Text Label 1200 3150 0    50   ~ 0
 5V
-Text Label 1800 3250 0    50   ~ 0
+Text Label 1150 3250 0    50   ~ 0
 GND
 Wire Wire Line
 	3750 3400 5550 3400
+$Comp
+L Device:C_Small C?
+U 1 1 6020A1F3
+P 2400 3400
+F 0 "C?" V 2171 3400 50  0000 C CNN
+F 1 "C_Small" V 2262 3400 50  0000 C CNN
+F 2 "" H 2400 3400 50  0001 C CNN
+F 3 "~" H 2400 3400 50  0001 C CNN
+	1    2400 3400
+	0    1    1    0   
+$EndComp
 Wire Wire Line
-	2250 3100 2500 3100
+	1650 3000 4600 3000
 Wire Wire Line
-	2500 3100 2500 3400
+	1650 3100 2050 3100
+Wire Wire Line
+	2050 3100 2050 3400
+Wire Wire Line
+	2050 3400 2300 3400
 $EndSCHEMATC
