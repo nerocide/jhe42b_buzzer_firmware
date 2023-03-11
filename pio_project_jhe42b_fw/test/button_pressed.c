@@ -40,7 +40,7 @@ void loop() {
         byte currKeyState = digitalRead(keyPin);
        
         if ((prevKeyState == HIGH) && (currKeyState == LOW)) {
-            keyPress();
+            $mz();
         }
         else if ((prevKeyState == LOW) && (currKeyState == HIGH)) {
             keyRelease();
