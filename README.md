@@ -43,7 +43,10 @@ You need a ST-link v2, so you can write firmware onto the STM8 flash memory.
 
 Follow instruction of [platfomio-ststl8](https://github.com/platformio/platform-ststm8#readme)
 
-**STM8S003F3** definitions should be available in **platfomio-ststl8** since [#PR28](https://github.com/platformio/platform-ststm8/pull/28) otherwise add definition board for [stm8s003f3.json](https://github.com/nerocide/platform-ststm8/blob/develop/boards/stm8s003f3.json) in ```C:\Users\<user>\.platformio\platforms\ststm8\boards```.
+**STM8S003F3** definitions should be available in **platfomio-ststl8** since [#PR28](https://github.com/platformio/platform-ststm8/pull/28).
+
+Otherwise add board definition [stm8s003f3.json](https://github.com/nerocide/platform-ststm8/blob/develop/boards/stm8s003f3.json) in :
+> C:\Users\<user>\.platformio\platforms\ststm8\boards
 
 
 ## Unlock chip
