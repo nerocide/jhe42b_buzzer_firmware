@@ -11,8 +11,8 @@ Espacially disarming buzzer without using onboard button.
 - [x] BEEPS every 30s after power loss (default)
 - [x] Turn ON/OFF onboard red LED depending on arming status (ON when armed)
 - [x] Disarm system when button is pressed
-- [x] Disarm if power supply is removed after 10-12s if armed (usefull when button is not accesible)
-- [ ] Power saving by changing BEEPS frequency 10s / 30s / 60s (default 30s)
+- [x] Disarm if power supply is removed after ``10-12s`` if armed (usefull when button is not accesible)
+- [ ] Power saving by changing BEEPS frequency `10s` / `30s` / `60s` (default ``30s``)
 - [x] BEEPS on signal pin request
 - [x] LIGHT flashs for every beeps (built-in)
 
@@ -28,13 +28,15 @@ Espacially disarming buzzer without using onboard button.
 
 # User manual
 
-Apply power to buzzer to ARM it (notice 3 notes arming sequence and red LED turing on)
+Apply power to buzzer to ``arm`` it (notice 3 notes arming sequence and red LED turning on)
 
-Buzzer will ring every 30s after power is loss
+`Alarm` will ring every `30s` after power is loss
 
-To disarm, either pressing the onboard button for more than `2s`, or apply power for `10-12s` then remove.
-
-Notice 3 notes disarming tune, and red LED turn off.
+To ``disarm``, either :
+- press onboard button for more than `2s`
+- or apply power for `10-12s` then remove.
+    
+Notice 3 notes disarming tune, and red LED turning off.
 
 
 # How to Build/Flash
