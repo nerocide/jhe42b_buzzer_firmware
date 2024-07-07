@@ -219,7 +219,7 @@ void blink_led(int led_pin, int count){
 void play_alarm(int buzzer_pin){
     int melody[] = { NOTE_DS8,  };
     // int tempo[] = { 12,  };
-    int tempo[] = { 10,  };
+    int tempo[] = { 1,  };
     int size = sizeof(melody) / sizeof(int);
     for (int thisNote = 0; thisNote < size; thisNote++) {
       // to calculate the note duration, take one second
