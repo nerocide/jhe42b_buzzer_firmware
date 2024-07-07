@@ -1,6 +1,6 @@
 # JHE42B and JHE42B_S open firmware
 
-Goal is to replace the default firmware in order to add common features found on other autonomous buzzer.
+The idea is to replace the default firmware in order to add common features found on other autonomous buzzer.
 
 Espacially disarming buzzer without using onboard button.
 
@@ -10,20 +10,34 @@ Espacially disarming buzzer without using onboard button.
 
 - [x] BEEPS every 30s after power loss (default)
 - [x] Turn ON/OFF onboard red LED depending on arming status (ON when armed)
-- [x] Disarm buzzer when button is pressed after a power outage
-- [x] Disarm if power supply is removed after 10-12s (usefull when button is not accesible)
+- [x] Disarm system when button is pressed
+- [x] Disarm if power supply is removed after 10-12s if armed (usefull when button is not accesible)
 - [ ] Power saving by changing BEEPS frequency 10s / 30s / 60s (default 30s)
+- [x] BEEPS on signal pin request
 - [x] LIGHT flashs for every beeps (built-in)
 
 
-# How to flash
-## Requirements
-- [ST-link v2](https://a.aliexpress.com/_ExNkgOT) (so you can write firmware onto the STM8 flash memory) [how to connect it?](#STMLinker-connection)
-- [stm8flash](https://github.com/vdudouyt/stm8flash) (best is to use [PlatformIO](https://platformio.org/))
+## Board testing matrix
 
-TODO
+|Model|BEEPS on power loss|Arming Red LED|Button disarm| Power source trick disarm| Power saving | LED Flash | BEEPS on signal
+|---|---|---|---|---|---|---|---|
+|JHE42B|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:||:x:|:heavy_check_mark:|
+|JHE42B_S|:grey_question:|:grey_question:|:grey_question:|:grey_question:||:grey_question:|:grey_question:|
 
-# How to Build
+:x: ko / :heavy_check_mark: ok / :grey_question: todo or more testing required
+
+# User manual
+
+Apply power to buzzer to ARM it (notice 3 notes arming sequence and red LED turing on)
+
+Buzzer will ring every 30s after power is loss
+
+To disarm, either pressing the onboard button for more than `2s`, or apply power for `10-12s` then remove.
+
+Notice 3 notes disarming tune, and red LED turn off.
+
+
+# How to Build/Flash
 ## Requirements
 - [vscode](https://code.visualstudio.com/) or any IDE supporting [PlatformIO](https://platformio.org/)
 - [ST-link v2](https://a.aliexpress.com/_ExNkgOT) (so you can write firmware onto the STM8 flash memory) [how to connect it?](#STMLinker-connection)
@@ -35,10 +49,6 @@ TODO
 - [PlatformIO](https://platformio.org/) should download and install all the toolchain/dependencies
 - build
 - upload/flash
-
-### Additional manual changes (obsolete)
-
-[**STM8S003F3**](https://github.com/platformio/platform-ststm8/blob/develop/boards/stm8s003f3.json)  definitions should be available in [**platfomio-ststl8**](https://github.com/platformio/platform-ststm8#readme) since [#PR28](https://github.com/platformio/platform-ststm8/pull/28).
 
 Otherwise add board definition [stm8s003f3.json](https://github.com/nerocide/platform-ststm8/blob/develop/boards/stm8s003f3.json) in :
 > C:\Users\<user>\.platformio\platforms\ststm8\boards
@@ -94,9 +104,9 @@ JHE42B_S|STM8S003F3 UFQFPN20|S033PHVG822Y|<img src="ressources/img/JHE42B_S_fron
 (checked if working)
 
 - [x] power supply detection
-- [x] blink onboard LED
-- [x] blink onboard LED
-- [x] bip on bipper
+- [x] blink onboard red LED
+- [x] blink onboard white LED
+- [x] bip on buzzer
 - [x] button press
 # Resources
 [ST STM8S003F3 DataSheet](ressources/doc/STM8S0003F3_datasheet_dm00024550.pdf)
