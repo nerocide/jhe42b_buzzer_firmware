@@ -28,7 +28,7 @@ Espacially disarming buzzer without using onboard button.
 
 # User manual
 
-Apply power to buzzer to ``arm`` it (notice 3 notes arming sequence and red LED turning on)
+Apply power to buzzer to `arm` it (notice 3 notes arming sequence and red LED turning `ON`)
 
 `Alarm` will ring every `30s` after power is loss
 
@@ -36,8 +36,9 @@ To ``disarm``, either :
 - press onboard button for more than `2s`
 - or apply power for `10-12s` then remove.
     
-Notice 3 notes disarming tune, and red LED turning off.
+Notice 3 notes disarming tune, and red LED turning `OFF`.
 
+After buzzer is `disarmed`, it needs to be power cycled to be `rearmed`.
 
 # How to Build/Flash
 ## Requirements

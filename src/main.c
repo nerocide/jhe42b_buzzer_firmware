@@ -99,7 +99,6 @@ void loop() {
     longPressCount=0;
     disarm();
   }
-
   // BUTTON MANAGEMENT
   if (buttonState == LOW) {
     if (buttonPressed == FALSE)
