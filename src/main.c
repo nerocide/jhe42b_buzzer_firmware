@@ -9,13 +9,14 @@
 #define signalPin 7 // PC5
 // const
 const int disarmDelay=10; // in seconds, how long should power be applied to disarm
-const int shortPressDelay=200; // in miliseconds, how long to press the button to register a press
-const int longPressDelay=2000; // in miliseconds, how long to press the button to register a press
-const int graceDelay=500; // in miliseconds, how long to press the button to register a press
+const int shortPressDelay=400; // in miliseconds, how long to press the button to register a press
+const int longPressDelay=1000; // in miliseconds, how long to press the button to register a press
 bool armed = FALSE;
 bool disarmed = FALSE;
 bool powerOutage = FALSE;
 bool buttonPressed = FALSE;
+bool longPress = FALSE;
+int lastState = LOW;
 int alarmInterval = 30; // number of seconds between each beeps
 int shortPressCount=0; // register number of time the bouton is short pressed
 int longPressCount=0; // register number of time the bouton is long pressed
@@ -95,32 +96,31 @@ void loop() {
     play_alarm(buzzerPin);
   }
   // Disarm with button
-  if ((armed == TRUE) && (longPressCount > 0)){ // if the button is pressed disarm the system
+  if ((armed == TRUE) && (longPressCount >= 3 )){ // if the button is pressed disarm the system
     longPressCount=0;
     disarm();
   }
   // BUTTON MANAGEMENT
-  if (buttonState == LOW) {
-    if (buttonPressed == FALSE)
-    {
-      buttonPressed=TRUE;
-      buttonPressMillis=millis();
+  if(lastState == HIGH && buttonState == LOW) {
+    buttonPressMillis = millis();
+    buttonPressed = true;
+    longPress = false;
+  } else if(lastState == LOW && buttonState == HIGH) {
+    buttonPressed = false;
+  }
+  if(buttonPressed == true && longPress == false) {
+    long pressDuration = millis() - buttonPressMillis;
+
+    if( pressDuration > shortPressDelay && pressDuration < longPressDelay ){
+      shortPressCount=shortPressCount+1;
     }
-  }else{
-    if (buttonPressed == TRUE)
-    {
-      buttonPressed=FALSE;
-      // detect short press
-      if ((round(currentMillis - buttonPressMillis) > shortPressDelay-graceDelay) && (round(currentMillis - buttonPressMillis) < shortPressDelay+graceDelay)){
-        shortPressCount=shortPressCount+1;
-        buttonPressMillis=0;
-      }
-      // detect short press
-      // if ((round(currentMillis - buttonPressMillis) > longPressDelay-graceDelay) && (round(currentMillis - buttonPressMillis) < longPressDelay+graceDelay)){
-      if ((round(currentMillis - buttonPressMillis) > longPressDelay)){
-        longPressCount=longPressCount+1;
-        buttonPressMillis=0;
-      }
+
+    if( pressDuration > longPressDelay ) {
+      longPressCount=longPressCount+1;
+      longPress = true;
+      play_button(buzzerPin);
     }
   }
+  // save the the last state
+  lastState = buttonState;
 }

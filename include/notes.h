@@ -180,6 +180,26 @@ void play_arming(int buzzer_pin){
       buzz(buzzer_pin, 0, noteDuration);
     }
 }
+void play_button(int buzzer_pin){
+    // int melody[] = { NOTE_E7, NOTE_E7, 0, NOTE_E7, 0, NOTE_C7, NOTE_E7, 0,  };
+    // int tempo[] = { 12, 12, 12, 12, 12, 12, 12, 12, };
+    int melody[] = { NOTE_G7, };
+    int tempo[] = {  9, };
+    int size = sizeof(melody) / sizeof(int);
+    for (int thisNote = 0; thisNote < size; thisNote++) {
+      // to calculate the note duration, take one second
+      // divided by the note type.
+      //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+      int noteDuration = 1000 / tempo[thisNote];
+      buzz(buzzer_pin, melody[thisNote], noteDuration);
+      // to distinguish the notes, set a minimum time between them.
+      // the note's duration + 30% seems to work well:
+      int pauseBetweenNotes = noteDuration * 1.30;
+      delay(pauseBetweenNotes);
+      // stop the tone playing:
+      buzz(buzzer_pin, 0, noteDuration);
+    }
+}
 
 void play_disarming(int buzzer_pin){
     // int melody[] = {  NOTE_C4, NOTE_C5, NOTE_A3, NOTE_A4,  NOTE_AS3, NOTE_AS4, 0,  0, };
@@ -203,18 +223,18 @@ void play_disarming(int buzzer_pin){
 }
 
 // blnk function for onboard led
-void blink_led(int led_pin, int count){
-    int duration=200;
-    digitalWrite(led_pin, LOW);
-    delay(10);
-    for (int i = 0; i < count; i++){
-        digitalWrite(led_pin, HIGH);
-        delay(duration);
-        digitalWrite(led_pin, LOW);
-        delay(duration);
+// void blink_led(int led_pin, int count){
+//     int duration=200;
+//     digitalWrite(led_pin, LOW);
+//     delay(10);
+//     for (int i = 0; i < count; i++){
+//         digitalWrite(led_pin, HIGH);
+//         delay(duration);
+//         digitalWrite(led_pin, LOW);
+//         delay(duration);
         
-    }
-}
+//     }
+// }
 
 void play_alarm(int buzzer_pin){
     int melody[] = { NOTE_DS8,  };
