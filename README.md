@@ -1,8 +1,6 @@
 # JHE42B and JHE42B_S open firmware
 
-The idea is to replace the default firmware in order to add common features found on other autonomous buzzer.
-
-Espacially disarming buzzer without using onboard button.
+The goal of this project is to replace the default firmware of the JHE42B and JHE42B_S buzzers, which use the STM8S003F3 chip, with a custom firmware that introduces common features found in other autonomous buzzers, especially the ability to disarm the buzzer without using the onboard button.
 
 # Features
 
@@ -40,6 +38,19 @@ Notice 3 notes disarming tune, and red LED turning `OFF`.
 
 After buzzer is `disarmed`, it needs to be power cycled to be `rearmed`.
 
+
+1. ``Arming`` the Buzzer:
+   - Apply power to the buzzer to arm it. You will hear a 3-note arming sequence and see the red LED turn ON.
+2. ``Alarm``:
+   - The buzzer will beep every 30 seconds after power is lost.
+3. ``Disarming`` the Buzzer:
+   - Press the onboard button for more than ``2 seconds``, or
+   - Apply power for ``10-12 seconds`` and then remove it.
+   - You will hear a 3-note disarming tune, and the red LED will turn OFF.
+4. ``Rearming``:
+   - After disarming, the buzzer needs to be power cycled to be rearmed.
+
+
 # How to Build/Flash
 ## Requirements
 - [vscode](https://code.visualstudio.com/) or any IDE supporting [PlatformIO](https://platformio.org/)
@@ -66,12 +77,12 @@ stm8flash -c stlinkv2 -u -p stm8s003?3
 
 ## STMLinker connection
 
-You should connect your wires as follow to the linker.
+Connect the wires to the linker as shown below.
 
 <img src="https://user-images.githubusercontent.com/32848699/128609610-dc31b74a-f0d0-4a57-a1cb-39078045d49f.jpg" width="500"/>
 
 
-If you don't want to solder on board, you can use a contraption like so...
+Alternatively, if you don't want to solder on the board, you can use a setup like this:
 
 <img src="ressources/img/pince-a-linge.jpg" width="100"/>
 +
@@ -103,7 +114,7 @@ JHE42B_S|STM8S003F3 UFQFPN20|S033PHVG822Y|<img src="ressources/img/JHE42B_S_fron
 
 <!-- <img src="ressources/img/JHE42B_S_front.jpg" width="300"/> <img src="ressources/img/JHE42B_S_back.jpg" width="300"/> -->
 
-# Reverse process
+# Reverse Engineering Process
 (checked if working)
 
 - [x] power supply detection
