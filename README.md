@@ -31,7 +31,7 @@ The goal of this project is to replace the default firmware of the JHE42B and JH
 2. ``Alarm``:
    - The buzzer will beep every 30 seconds after power is lost.
 3. ``Disarming`` the Buzzer:
-   - Press the onboard button 3 times (1-note when press is registered), or
+   - Long press the onboard button 3 times (you hear1-note when press is registered), or
    - Apply power for ``10 seconds`` and then remove it.
    - You will hear a 3-note disarming tune, and the red LED will turn OFF.
 4. ``Rearming``:
