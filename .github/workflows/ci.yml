@@ -1,11 +1,11 @@
 name: PlatformIO CI
 
 on: [push]
-
 jobs:
   build:
+    env:
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
