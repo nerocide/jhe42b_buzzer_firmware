@@ -1,126 +1,144 @@
 #include <Arduino.h>
 #include <notes.h>
-// board pinout
-#define powerPin 1  // PA2
-#define buttonPin 2 // PA3
-// #define ledBuzzerPin 5 //not used?
-#define redLedPin 8 // PC6
-#define buzzerPin 13  // PD4
-#define signalPin 7 // PC5
-// const
-const int disarmDelay=10; // in seconds, how long should power be applied to disarm
-const int shortPressDelay=400; // in miliseconds, how long to press the button to register a press
-const int longPressDelay=1000; // in miliseconds, how long to press the button to register a press
-bool armed = FALSE;
-bool disarmed = FALSE;
-bool powerOutage = FALSE;
-bool buttonPressed = FALSE;
-bool longPress = FALSE;
-int lastState = LOW;
-int alarmInterval = 30; // number of seconds between each beeps
-int shortPressCount=0; // register number of time the bouton is short pressed
-int longPressCount=0; // register number of time the bouton is long pressed
-unsigned long powerCutMillis=0;
-unsigned long pluggedMillis=0; // store plugged timestamp
-unsigned long buttonPressMillis=0; // store button press timestamp
-unsigned long lastAlarmMillis=0; // store previous alarm timestamp
 
-void setup()  { // setup pins I/O
-  pinMode(buttonPin,INPUT);
-  pinMode(powerPin,INPUT);
-  pinMode(signalPin,INPUT);
-  pinMode(redLedPin,OUTPUT);
-  // pinMode(ledBuzzerPin,OUTPUT);
-  pinMode(buzzerPin,OUTPUT);
+// Pin definitions
+#define powerPin 1      // PA2
+#define buttonPin 2     // PA3
+#define redLedPin 8     // PC6
+#define buzzerPin 13    // PD4
+#define signalPin 7     // PC5
+
+// Constants
+const int disarmDelay = 10;         // Seconds to apply power to disarm
+const int shortPressDelay = 400;    // Milliseconds for short press
+const int longPressDelay = 1000;    // Milliseconds for long press
+const int debounceDelay = 50;       // Milliseconds for button debounce
+const int alarmIntervalDefault = 30; // Default alarm interval in seconds
+
+// State variables
+bool armed = false;
+bool disarmed = false;
+bool powerOutage = false;
+bool buttonPressed = false;
+bool longPress = false;
+int shortPressCount = 0;
+int longPressCount = 0;
+int lastButtonState = HIGH;
+// int alarmInterval = alarmIntervalDefault;
+
+unsigned long powerCutMillis = 0;
+unsigned long pluggedMillis = 0;
+unsigned long buttonPressMillis = 0;
+unsigned long lastAlarmMillis = 0;
+unsigned long lastDebounceTime = 0;
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(powerPin, INPUT);
+  pinMode(signalPin, INPUT);
+  pinMode(redLedPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
 }
 
-void disarm(){
-  disarmed = TRUE; // disarm the system
-  armed = FALSE; // disarm the system
-  powerCutMillis = 0; // reset power cut timestamp so we can detect outage
-  digitalWrite(redLedPin, LOW); // turn off red led onboard
-  play_disarming(buzzerPin); // play disarm sound
+void disarm() {
+  disarmed = true;
+  armed = false;
+  powerCutMillis = 0;
+  digitalWrite(redLedPin, LOW);
+  play_disarming(buzzerPin);
 }
 
-void arm(){
-  armed = TRUE; // arm the system
-  digitalWrite(redLedPin, HIGH); // turn on red led onboard      
-  play_arming(buzzerPin); // play arming sound
-  shortPressCount=0;
-  longPressCount=0;
+void arm() {
+  armed = true;
+  digitalWrite(redLedPin, HIGH);
+  play_arming(buzzerPin);
+  shortPressCount = 0;
+  longPressCount = 0;
+}
+
+void handlePowerState(int mainPowerState, unsigned long currentMillis) {
+  if (mainPowerState == HIGH) { // When main power connected
+    if (!armed && !disarmed) {
+      pluggedMillis = millis();
+      arm();
+    }
+    if (powerOutage) {
+      pluggedMillis = millis();
+      powerCutMillis = 0;
+      powerOutage = false;
+    }
+    if (longPressCount >= 3 && disarmed) {
+      longPressCount = 0;
+      arm();
+    }
+  } else if (mainPowerState == LOW) { // When main power disconnected
+    if (armed) {
+      if (!powerOutage) {
+        powerCutMillis = millis();
+        powerOutage = true;
+        lastAlarmMillis = powerCutMillis;
+      }
+      if ((currentMillis - lastAlarmMillis) / 1000 >= alarmIntervalDefault) {
+        lastAlarmMillis = millis();
+        play_alarm(buzzerPin);
+      }
+      if (powerOutage && (currentMillis - powerCutMillis) / 1000 > disarmDelay - 1 && 
+          (currentMillis - powerCutMillis) / 1000 < disarmDelay + 1) {
+        disarm();
+      }
+      if (longPressCount >= 3) {
+        longPressCount = 0;
+        disarm();
+      }
+    }
+    if (disarmed) {
+      armed = false;
+      disarmed = false;
+    }
+  }
+}
+
+void handleSignalState(int signalState) {
+  if (signalState == LOW) {
+    play_alarm(buzzerPin);
+  }
+}
+
+void handleButtonState(int buttonState, unsigned long currentMillis) {
+  if (buttonState != lastButtonState) {
+    lastDebounceTime = currentMillis;
+  }
+  
+  if ((currentMillis - lastDebounceTime) > debounceDelay) {
+    if (buttonState == LOW) {
+      if (!buttonPressed) {
+        buttonPressed = true;
+        buttonPressMillis = currentMillis;
+        longPress = false;
+      } else {
+        long pressDuration = currentMillis - buttonPressMillis;
+        if (pressDuration > shortPressDelay && pressDuration < longPressDelay) {
+          shortPressCount++;
+        } else if (pressDuration > longPressDelay) {
+          longPressCount++;
+          longPress = true;
+          play_button(buzzerPin);
+        }
+      }
+    } else {
+      buttonPressed = false;
+    }
+  }
+  lastButtonState = buttonState;
 }
 
 void loop() {
-  int mainPowerState = digitalRead(powerPin); // HIGH when plugged
-  int buttonState = digitalRead(buttonPin); //LOW when pressed
-  int signalState = digitalRead(signalPin); //LOW when activated
-  unsigned long currentMillis=millis(); // current time marker
+  unsigned long currentMillis = millis();
+  int mainPowerState = digitalRead(powerPin);
+  int buttonState = digitalRead(buttonPin);
+  int signalState = digitalRead(signalPin);
 
-  if (mainPowerState == HIGH){ // when main power connected
-    if ((armed == FALSE) && (disarmed == FALSE)){ // if not armed, arm buzzer
-      pluggedMillis=millis();
-      arm();
-    }
-    if (powerOutage == TRUE){ //if there is an outage
-      pluggedMillis=millis(); // store plugged timestamp
-      powerCutMillis = 0; // reset power cut timestamp so we can detect outage
-      powerOutage = FALSE; // register power outage
-    }
-  }
-  // when main power is disconnected
-  if (mainPowerState == LOW){ // when main power connected
-    if (armed == TRUE){ // if buzzer is armed
-      if (powerOutage == FALSE){ // if no outage is present
-        powerCutMillis=millis(); // store power cut timestamp
-        powerOutage=TRUE; // register power outage
-        lastAlarmMillis=powerCutMillis;
-      }
-      
-      if (round((currentMillis - lastAlarmMillis)/1000) >= alarmInterval){ // when power outage duration is equal or more than alarmInterval
-        lastAlarmMillis=millis(); // store current time for next alarm
-        play_alarm(buzzerPin); // play alarm
-      }
-      if (powerOutage == TRUE){ // if there is an outage
-        if ((round((powerCutMillis - pluggedMillis)/1000) > (disarmDelay-1)) && (round((powerCutMillis - pluggedMillis)/1000) < (disarmDelay+1))){ // and power was applied for disarmDelay ~ +/- 1s
-          disarm();
-        }
-      }
-    }
-    if (disarmed == TRUE){
-      armed = FALSE;
-      disarmed = FALSE;
-    }
-  }
-  // SIGNALBUZZER
-  if (signalState == LOW){ // when signal is enable play sound
-    play_alarm(buzzerPin);
-  }
-  // Disarm with button
-  if ((armed == TRUE) && (longPressCount >= 3 )){ // if the button is pressed disarm the system
-    longPressCount=0;
-    disarm();
-  }
-  // BUTTON MANAGEMENT
-  if(lastState == HIGH && buttonState == LOW) {
-    buttonPressMillis = millis();
-    buttonPressed = true;
-    longPress = false;
-  } else if(lastState == LOW && buttonState == HIGH) {
-    buttonPressed = false;
-  }
-  if(buttonPressed == true && longPress == false) {
-    long pressDuration = millis() - buttonPressMillis;
-
-    if( pressDuration > shortPressDelay && pressDuration < longPressDelay ){
-      shortPressCount=shortPressCount+1;
-    }
-
-    if( pressDuration > longPressDelay ) {
-      longPressCount=longPressCount+1;
-      longPress = true;
-      play_button(buzzerPin);
-    }
-  }
-  // save the the last state
-  lastState = buttonState;
+  handlePowerState(mainPowerState, currentMillis);
+  handleSignalState(signalState);
+  handleButtonState(buttonState, currentMillis);
 }
