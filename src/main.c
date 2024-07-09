@@ -93,7 +93,7 @@ void loop() {
   }
   // SIGNALBUZZER
   if (signalState == LOW){ // when signal is enable play sound
-    play_alarm(buzzerPin);
+    play_signal(buzzerPin);
   }
   // Disarm with button
   if ((armed == TRUE) && (longPressCount >= 3 )){ // if the button is pressed disarm the system
