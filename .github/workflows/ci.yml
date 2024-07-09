@@ -3,18 +3,16 @@ name: PlatformIO CI
 on: [push]
 jobs:
   build:
-    env:
-        FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4.1.7
+      - uses: actions/cache@v4.0.2
         with:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
           key: ${{ runner.os }}-pio
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5.1.0
         with:
           python-version: '3.11'
       - name: Install PlatformIO Core
